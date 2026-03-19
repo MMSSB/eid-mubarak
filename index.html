@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
     <title>Eid Mubarak! 🌙✨</title>
     <meta name="description" content="Made By MMS">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
@@ -172,7 +174,62 @@
             0% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
             100% { opacity: 0; transform: scale(0.2) translateY(30px) rotate(90deg); }
         }
+/* ... (Your existing CSS variables and base styles) ... */
 
+    /* --- MOBILE SPECIFIC FIXES --- */
+    @media (max-width: 600px) {
+        .eid-title {
+            font-size: clamp(2.5rem, 15vw, 4rem); /* Smaller font for mobile */
+            margin-bottom: 10px;
+        }
+
+        .eid-subtitle {
+            font-size: 1rem;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .eidi-box {
+            padding: 12px 20px;
+            width: 90%; /* Fluid width on mobile */
+            max-width: 320px;
+        }
+
+        .eidi-text {
+            font-size: 0.9rem;
+        }
+
+
+
+        /* Make lanterns smaller so they don't crowd the screen */
+        .lantern {
+            width: 40px !important;
+        }
+
+        /* Speed up ticker for faster reading on small screens */
+        .news-ticker {
+            animation-duration: 40s;
+            font-size: 1rem;
+        }
+        
+        /* Adjust Auntie popups to stay within screen center */
+        .auntie-popup {
+            width: 85vw;
+            left: 7.5vw !important;
+            font-size: 1rem;
+        }
+    }
+
+    /* Handle Landscape mode on phones */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .celebration-content {
+            flex-direction: row;
+            gap: 15px;
+            transform: scale(0.8);
+        }
+        .lantern-container { display: none; }
+        #coma-meter-container { top: 10px; bottom: auto; left: 10px; transform: none; }
+    }
         /* --- SUGAR COMA METER --- */
         #coma-meter-container {
             position: absolute;

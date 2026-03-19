@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak! 🌙✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- BASE STYLES --- */
+        :root {
+            --bg-dark: #070714;
+            --bg-party: #120b29;
+            --primary: #ff00cc;
+            --secondary: #00ffff;
+            --gold: #ffd700;
+            --danger: #ff3366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden; 
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 1s ease;
+        }
+
+        /* Screen Shake & Caffeine Rush */
+        .shake {
+            animation: screenShake 0.5s infinite;
+        }
+        
+        .caffeine-rush {
+            animation: crazyColors 0.5s infinite, screenShake 0.2s infinite;
+        }
+
+        @keyframes crazyColors {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes screenShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* --- INTRO SCENE --- */
+        #intro-scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            background: radial-gradient(circle at center, #1a1a3a 0%, var(--bg-dark) 100%);
+            transition: opacity 1s ease, transform 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        .telescope-text {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0 20px;
+            animation: pulseText 1.5s infinite alternate;
+        }
+
+        .moon-container {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 2s ease;
+        }
+
+        .moon-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .moon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: 20px 20px 0 0 var(--gold);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+            animation: rockMoon 4s infinite ease-in-out alternate;
+        }
+
+        .street-lamp {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ffebcc;
+            box-shadow: 0 0 30px 10px rgba(255, 235, 204, 0.8);
+            position: absolute;
+            top: 20px;
+            left: 30px;
+        }
+
+        #flash {
+            position: absolute;
+            inset: 0;
+            background: white;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- CELEBRATION SCENE --- */
+        #celebration-scene {
+            position: absolute;
+            inset: 0;
+            display: none; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            background: radial-gradient(circle at bottom, #2b1055 0%, var(--bg-dark) 100%);
+            text-align: center;
+            padding: 20px;
+        }
+
+        #fireworks {
+            position: absolute;
+            inset: 0;
+            z-index: 1; 
+        }
+
+        /* --- MAGIC CURSOR TRAIL --- */
+        .magic-trail {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.2rem;
+            z-index: 1000;
+            animation: trailFade 0.8s linear forwards;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+        }
+        @keyframes trailFade {
+            0% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: scale(0.2) translateY(30px) rotate(90deg); }
+        }
+
+        /* --- SUGAR COMA METER --- */
+        #coma-meter-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            animation: slideUpFade 1s 2s forwards ease-out;
+        }
+
+        .meter-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meter-bar {
+            width: 150px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--danger));
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* --- FALLING COOKIES --- */
+        .falling-cookie {
+            position: absolute;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 25;
+            animation: fallDown linear forwards;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+            transition: transform 0.1s;
+        }
+        
+        .falling-cookie:hover { transform: scale(1.2); }
+        
+        .golden-cookie {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 20px var(--gold));
+            animation: fallDown linear forwards, pulseGolden 0.5s infinite alternate;
+        }
+
+        @keyframes pulseGolden {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--gold)); }
+            100% { transform: scale(1.1); filter: drop-shadow(0 0 30px var(--gold)); }
+        }
+
+        @keyframes fallDown {
+            0% { top: -50px; transform: rotate(0deg); }
+            100% { top: 110vh; transform: rotate(360deg); }
+        }
+
+        /* --- AUNTIE POPUP MINI-GAME --- */
+        .auntie-popup {
+            position: absolute;
+            background: linear-gradient(135deg, #ff00cc, #ff3366);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid white;
+            z-index: 200;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: top 0.1s ease-out, left 0.1s ease-out;
+            text-align: center;
+            max-width: 300px;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        .dodge-btn {
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: white;
+            color: #ff3366;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #cccccc;
+            font-family: 'Nunito', sans-serif;
+        }
+        .dodge-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #cccccc;
+        }
+
+        /* UI Elements */
+        .celebration-content {
+            z-index: 20;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            pointer-events: none; 
+        }
+
+        .eid-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1.1;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--gold), var(--primary));
+            background-size: 300% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+            text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+
+        .eid-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            max-width: 600px;
+            opacity: 0;
+            animation: slideUpFade 1s 0.5s forwards ease-out;
+        }
+
+        .eidi-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 15px 30px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: slideUpFade 1s 1s forwards ease-out;
+            cursor: pointer;
+            transition: all 0.3s;
+            pointer-events: auto; 
+        }
+
+        .eidi-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .eidi-text {
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        /* --- NEWS TICKER --- */
+        .news-ticker-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--secondary);
+            font-weight: bold;
+            padding: 12px 0;
+            overflow: hidden;
+            z-index: 30;
+            border-top: 2px dashed var(--primary);
+        }
+
+        .news-ticker {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 1.2rem;
+            animation: ticker 35s linear infinite;
+        }
+
+        /* --- FUNNY FLYING COFFEE ROCKET --- */
+        .flying-coffee {
+            position: absolute;
+            bottom: -200px;
+            left: -150px;
+            width: 150px;
+            z-index: 15;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.5));
+            pointer-events: auto;
+            cursor: crosshair; /* To show it's shootable/clickable */
+        }
+
+        .fly-animation {
+            animation: flyAcross 12s linear infinite;
+        }
+
+        /* --- LANTERNS --- */
+        .lantern-container {
+            position: absolute;
+            top: 0;
+            z-index: 15;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 10vw;
+            pointer-events: none;
+        }
+
+        .lantern {
+            width: 60px;
+            transform-origin: top center;
+            animation: swing 4s infinite ease-in-out alternate;
+        }
+        
+        .lantern:nth-child(2) {
+            animation-duration: 5s;
+            animation-delay: 1s;
+            width: 80px;
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes pulseText { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes rockMoon { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
+        @keyframes shine { to { background-position: 300% center; } }
+        @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes flashBang { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes flyAcross { 0% { transform: translate(0, 0) rotate(-10deg); } 25% { transform: translate(30vw, -40vh) rotate(5deg); } 50% { transform: translate(60vw, -20vh) rotate(-5deg); } 75% { transform: translate(90vw, -60vh) rotate(10deg); } 100% { transform: translate(120vw, -100vh) rotate(-15deg); } }
+        @keyframes swing { 0% { transform: rotate(-15deg); } 100% { transform: rotate(15deg); } }
+        @keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+        /* Confetti text pop */
+        .pop-text {
+            position: absolute;
+            color: var(--gold);
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            pointer-events: none;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            animation: floatAway 1s forwards ease-out;
+            z-index: 1001;
+        }
+
+        @keyframes floatAway { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-70px) scale(1.5); } }
+        @keyframes emojiScatter { 0% { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(0deg); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); } }
+
+        /* --- START SCREEN --- */
+        #start-screen {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-dark);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #start-btn {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 0, 204, 0.4);
+            transition: all 0.3s ease;
+            animation: pulseBtn 2s infinite alternate;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.6);
+        }
+
+        @keyframes pulseBtn { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
+    </style>
+</head>
+<body>
+
+    <!-- SCENE 0: Start Button -->
+    <div id="start-screen">
+        <button id="start-btn">Start Moon Sighting 🔭</button>
+    </div>
+
+    <!-- SCENE 1: The Build Up -->
+    <div id="intro-scene">
+        <div class="telescope-text" id="status-text">Calibrating Telescope...</div>
+        <div class="moon-container" id="the-moon">
+            <div id="moon-element" class="moon"></div>
+        </div>
+    </div>
+
+    <!-- The Transition Flash -->
+    <div id="flash"></div>
+
+    <!-- SCENE 2: The Funny & Cool Celebration -->
+    <div id="celebration-scene">
+        <!-- Canvas for high-performance fireworks -->
+        <canvas id="fireworks"></canvas>
+
+        <!-- Sugar Coma Meter -->
+        <div id="coma-meter-container">
+            <div class="meter-title">Sugar Coma Level</div>
+            <div class="meter-bar">
+                <div id="meter-fill"></div>
+            </div>
+            <div class="meter-title" id="meter-status" style="font-size: 0.6rem; color: #fff;">Status: Hungry</div>
+        </div>
+
+        <!-- Hanging Lanterns (SVG) -->
+        <div class="lantern-container">
+            <svg class="lantern" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="0" x2="50" y2="40" stroke="#ffd700" stroke-width="2"/>
+                <path d="M30 40 L70 40 L80 120 L20 120 Z" fill="rgba(255, 215, 0, 0.2)" stroke="#ffd700" stroke-width="4"/>
+                <path d="M20 120 L80 120 L60 150 L40 150 Z" fill="#ffd700"/>
+                <circle cx="50" cy="80" r="15" fill="#ff00cc" opacity="0.8">
+                    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="50" cy="165" r="5" fill="#ffd700"/>
+            </svg>
+            <svg class="lantern" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="0" x2="50" y2="40" stroke="#00ffff" stroke-width="2"/>
+                <path d="M40 40 L60 40 L75 110 L25 110 Z" fill="rgba(0, 255, 255, 0.2)" stroke="#00ffff" stroke-width="4"/>
+                <path d="M25 110 L75 110 L55 130 L45 130 Z" fill="#00ffff"/>
+                <circle cx="50" cy="75" r="10" fill="#ffd700" opacity="0.8">
+                    <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </div>
+
+        <!-- The Main Content -->
+        <div class="celebration-content">
+            <h1 class="eid-title">EID MUBARAK!</h1>
+            <p class="eid-subtitle">Ramadan is over! Catch the falling Kahk and beware of the Aunties asking questions! ☕🍪</p>
+            
+            <div class="eidi-box" id="eidi-btn">
+                <div class="eidi-text">💰 CLICK HERE TO SEND ME EIDI 💰</div>
+                <small style="opacity:0.7;">(Warning: Button may cause extreme wealth transfer)</small>
+            </div>
+        </div>
+
+        <!-- The Funny Flying Coffee (SVG) - NOW CLICKABLE! -->
+        <div class="flying-coffee" id="coffee-rocket" title="Click for Caffeine Rush!">
+            <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Rocket Flames -->
+                <g transform="translate(0, 50)">
+                    <path d="M80 180 Q100 250 120 180 Z" fill="#ff3366">
+                        <animate attributeName="d" values="M80 180 Q100 250 120 180 Z; M70 180 Q100 280 130 180 Z; M80 180 Q100 250 120 180 Z" dur="0.5s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M90 180 Q100 220 110 180 Z" fill="#ffd700">
+                        <animate attributeName="d" values="M90 180 Q100 220 110 180 Z; M85 180 Q100 240 115 180 Z; M90 180 Q100 220 110 180 Z" dur="0.5s" repeatCount="indefinite"/>
+                    </path>
+                </g>
+                <!-- Coffee Cup -->
+                <g transform="translate(0, 20)">
+                    <path d="M140 80 Q170 80 170 110 Q170 140 140 140" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+                    <path d="M50 50 L150 50 L130 180 L70 180 Z" fill="#fff"/>
+                    <ellipse cx="100" cy="50" rx="50" ry="15" fill="#4a2e15"/>
+                    <rect x="75" y="90" width="50" height="50" rx="25" fill="#ff00cc"/>
+                    <text x="100" y="120" font-family="Arial" font-size="24" font-weight="bold" fill="#fff" text-anchor="middle" dominant-baseline="middle">☕</text>
+                </g>
+                <line x1="30" y1="100" x2="30" y2="150" stroke="#00ffff" stroke-width="4" stroke-dasharray="10 10">
+                    <animate attributeName="y2" values="150; 200; 150" dur="1s" repeatCount="indefinite"/>
+                </line>
+                <line x1="170" y1="50" x2="170" y2="120" stroke="#00ffff" stroke-width="4" stroke-dasharray="10 10">
+                    <animate attributeName="y2" values="120; 180; 120" dur="0.8s" repeatCount="indefinite"/>
+                </line>
+            </svg>
+        </div>
+
+        <!-- Funny News Ticker -->
+        <div class="news-ticker-container">
+            <div class="news-ticker" id="news-bar">
+                🚨 BREAKING NEWS: Man attempts to eat 3rd lunch, forgets it's only 11 AM 🚨 &nbsp; | &nbsp; 📉 Water consumption drops by 90% as population survives on pure caffeine 📉 &nbsp; | &nbsp; ☕ Local coffee shops report 5000% increase in morning sales ☕ &nbsp; | &nbsp; 🍪 Scientific study confirms stomach capacity expands infinitely for Kahk 🍪 &nbsp; | &nbsp; 💰 Eidi reserves running critically low, uncle caught handing out expired coupons! 💰 &nbsp; | &nbsp; 💤 "I'll just rest my eyes for 5 minutes" turns into 14-hour hibernation 💤
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. THE CINEMATIC TIMELINE WITH JOKES ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const statusText = document.getElementById('status-text');
+            const moonContainer = document.getElementById('the-moon');
+            const moonElement = document.getElementById('moon-element');
+            const introScene = document.getElementById('intro-scene');
+            const celebrationScene = document.getElementById('celebration-scene');
+            const flash = document.getElementById('flash');
+            const coffeeRocket = document.getElementById('coffee-rocket');
+            
+            const startScreen = document.getElementById('start-screen');
+            const startBtn = document.getElementById('start-btn');
+
+            let timelineRunning = false;
+
+            startBtn.addEventListener('click', () => {
+                if(timelineRunning) return;
+                timelineRunning = true;
+
+                startScreen.style.opacity = '0';
+                setTimeout(() => startScreen.style.display = 'none', 500);
+
+                setTimeout(() => { statusText.innerText = "Searching Night Sky..."; }, 1000);
+
+                // The Street Lamp Joke
+                setTimeout(() => {
+                    moonContainer.classList.add('visible');
+                    moonElement.className = 'street-lamp';
+                    moonElement.style.animation = 'none'; 
+                }, 2500);
+
+                setTimeout(() => { 
+                    statusText.innerText = "Wait, is that a street lamp? 💡"; 
+                    statusText.style.color = "#ffebcc";
+                }, 3500);
+
+                setTimeout(() => {
+                    moonContainer.classList.remove('visible');
+                    statusText.innerText = "Recalibrating...";
+                    statusText.style.color = "rgba(255, 255, 255, 0.8)";
+                }, 5500);
+
+                // The Real Moon
+                setTimeout(() => {
+                    moonElement.className = 'moon';
+                    moonElement.style.animation = 'rockMoon 4s infinite ease-in-out alternate';
+                    moonContainer.classList.add('visible');
+                    statusText.innerText = "Real Moon Spotted! 🌙";
+                    statusText.style.color = "var(--gold)";
+                }, 7500);
+
+                setTimeout(() => { statusText.innerText = "Initiating Eid Protocol..."; }, 9500);
+
+                // The Drop
+                setTimeout(() => {
+                    flash.style.animation = "flashBang 1.5s forwards ease-out";
+                    
+                    setTimeout(() => {
+                        introScene.style.display = 'none';
+                        celebrationScene.style.display = 'flex';
+                        
+                        initFireworks();
+                        coffeeRocket.classList.add('fly-animation');
+                        startCookieRain(); 
+                        startAuntieMiniGame(); // Start the Auntie Boss
+                    }, 200);
+
+                }, 11000);
+            });
+        });
+
+        // --- NEW: MAGIC CURSOR TRAIL ---
+        document.addEventListener('mousemove', (e) => {
+            if (document.getElementById('celebration-scene').style.display !== 'flex') return;
+            if (Math.random() > 0.4) return; // Don't spawn too many
+            
+            const trail = document.createElement('div');
+            trail.className = 'magic-trail';
+            const trailEmojis = ['✨', '🌟', '🌙', '💫'];
+            trail.innerText = trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
+            trail.style.left = `${e.clientX - 10}px`;
+            trail.style.top = `${e.clientY - 10}px`;
+            
+            document.body.appendChild(trail);
+            setTimeout(() => { if (trail.parentNode) trail.remove(); }, 800);
+        });
+
+        // --- NEW: COFFEE ROCKET CAFFEINE RUSH EASTER EGG ---
+        const coffeeRocket = document.getElementById('coffee-rocket');
+        const newsBar = document.getElementById('news-bar');
+        
+        coffeeRocket.addEventListener('mousedown', (e) => {
+            if(isOverloaded) return;
+            showPopText("CAFFEINE RUSH!!! ⚡🚀", e.clientX, e.clientY, "var(--secondary)");
+            
+            document.body.classList.add('caffeine-rush');
+            newsBar.style.animationDuration = '3s'; // Super fast news
+            coffeeRocket.style.animationDuration = '3s'; // Zoom out
+            
+            // Spawn mega fireworks
+            createExplosion(e.clientX, e.clientY, 150, '#00ffff');
+            
+            setTimeout(() => {
+                document.body.classList.remove('caffeine-rush');
+                newsBar.style.animationDuration = '35s';
+                coffeeRocket.style.animationDuration = '12s';
+            }, 5000); // 5 seconds of madness
+        });
+
+        // --- NEW: AUNTIE DODGE MINI-GAME ---
+        function startAuntieMiniGame() {
+            const questions = [
+                "So... when are you getting married? 🤨",
+                "How are your grades? Let me see! 🤓",
+                "Did you gain weight from the Kahk? 😳",
+                "My son is an Engineer, what are you doing? 🎓"
+            ];
+
+            setInterval(() => {
+                if(isOverloaded || document.visibilityState !== 'visible') return;
+                
+                const popup = document.createElement('div');
+                popup.className = 'auntie-popup';
+                popup.innerHTML = `👩‍🦳 Auntie asks:<br/><br/>"${questions[Math.floor(Math.random() * questions.length)]}"`;
+                
+                // Random position within safe bounds
+                popup.style.top = Math.max(10, Math.random() * 70) + 'vh';
+                popup.style.left = Math.max(10, Math.random() * 70) + 'vw';
+                
+                const dodgeBtn = document.createElement('button');
+                dodgeBtn.className = 'dodge-btn';
+                dodgeBtn.innerText = "Dodge Question 🏃‍♂️💨";
+                
+                // The button tries to run away when you hover!
+                dodgeBtn.addEventListener('mouseover', () => {
+                    if(Math.random() > 0.4) {
+                        popup.style.top = Math.max(10, Math.random() * 70) + 'vh';
+                        popup.style.left = Math.max(10, Math.random() * 70) + 'vw';
+                    }
+                });
+
+                dodgeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showPopText("Successfully Dodged! 😅", parseInt(popup.style.left), parseInt(popup.style.top), "#00ffff");
+                    createExplosion(e.clientX, e.clientY, 20, '#ffffff');
+                    popup.remove();
+                });
+
+                popup.appendChild(document.createElement('br'));
+                popup.appendChild(dodgeBtn);
+                document.getElementById('celebration-scene').appendChild(popup);
+                
+                // Disappears after 8 seconds if ignored
+                setTimeout(() => { if(popup.parentNode) popup.remove(); }, 8000);
+
+            }, 20000); // Appears every 20 seconds
+        }
+
+        // --- 2. SUGAR COMA & INTERACTIVE COOKIES GAME ---
+        let sugarLevel = 0;
+        const meterFill = document.getElementById('meter-fill');
+        const meterStatus = document.getElementById('meter-status');
+        const eatSounds = ["CHOMP!", "CRUNCH!", "YUM!", "MORE!", "SUGAR RUSH!", "GULP!"];
+        let isOverloaded = false;
+
+        function updateMeter(amount) {
+            if (isOverloaded) return;
+            
+            sugarLevel += amount;
+            if (sugarLevel > 100) sugarLevel = 100;
+            
+            meterFill.style.width = `${sugarLevel}%`;
+
+            if (sugarLevel < 30) meterStatus.innerText = "Status: Still Hungry";
+            else if (sugarLevel < 60) meterStatus.innerText = "Status: Getting Full";
+            else if (sugarLevel < 90) meterStatus.innerText = "Status: Stomach Pain";
+            else if (sugarLevel < 100) meterStatus.innerText = "Status: CRITICAL LIMIT";
+            else {
+                meterStatus.innerText = "⚠️ SUGAR OVERLOAD ⚠️";
+                meterStatus.style.color = "var(--danger)";
+                meterStatus.style.fontSize = "0.9rem";
+                triggerOverload();
+            }
+        }
+
+        function triggerOverload() {
+            isOverloaded = true;
+            document.body.classList.add('shake');
+            document.querySelector('.eid-subtitle').innerText = "SYSTEM ERROR: TOO MUCH KAHK CONSUMED. INITIATING NAP SEQUENCE.";
+            document.querySelector('.eid-subtitle').style.color = "var(--danger)";
+            
+            // Mega explosion
+            createExplosion(window.innerWidth/2, window.innerHeight/2, 400, '#ff3366');
+            
+            setTimeout(() => {
+                document.body.classList.remove('shake');
+                sugarLevel = 0;
+                meterFill.style.width = '0%';
+                meterStatus.innerText = "Status: Woke up hungry again";
+                meterStatus.style.color = "#fff";
+                meterStatus.style.fontSize = "0.6rem";
+                document.querySelector('.eid-subtitle').innerText = "Just kidding, there is always room for more! ☕🍪 Eid Mubarak";
+                document.querySelector('.eid-subtitle').style.color = "#fff";
+                isOverloaded = false;
+            }, 6000); 
+        }
+
+        function startCookieRain() {
+            setInterval(() => {
+                if(isOverloaded || document.visibilityState !== 'visible') return;
+                
+                const cookie = document.createElement('div');
+                const isGolden = Math.random() < 0.08; // 8% chance for legendary cookie
+                
+                cookie.className = isGolden ? 'falling-cookie golden-cookie' : 'falling-cookie';
+                cookie.innerText = '🍪';
+                cookie.style.left = `${Math.random() * 90}vw`;
+                
+                const duration = 4 + Math.random() * 4;
+                cookie.style.animationDuration = `${duration}s`;
+
+                const eatAction = (e) => {
+                    e.stopPropagation(); 
+                    const clientX = e.clientX || e.touches[0].clientX;
+                    const clientY = e.clientY || e.touches[0].clientY;
+
+                    if (isGolden) {
+                        showPopText("LEGENDARY KAHK! +25 🌟", clientX, clientY, "var(--gold)");
+                        createExplosion(clientX, clientY, 100, "var(--gold)");
+                        updateMeter(25);
+                    } else {
+                        showPopText(eatSounds[Math.floor(Math.random() * eatSounds.length)], clientX, clientY, '#d2b48c');
+                        createExplosion(clientX, clientY, 15, '#d2b48c'); 
+                        updateMeter(8); 
+                    }
+                    cookie.remove();
+                };
+
+                cookie.addEventListener('mousedown', eatAction);
+                cookie.addEventListener('touchstart', eatAction);
+
+                document.getElementById('celebration-scene').appendChild(cookie);
+
+                setTimeout(() => { if (cookie.parentNode) cookie.remove(); }, duration * 1000);
+            }, 800); 
+        }
+
+        function showPopText(msg, x, y, color = "var(--gold)") {
+            const popText = document.createElement('div');
+            popText.className = 'pop-text';
+            popText.innerText = msg;
+            popText.style.color = color;
+            popText.style.left = `${x - 40}px`;
+            popText.style.top = `${y - 20}px`;
+            document.body.appendChild(popText);
+            setTimeout(() => popText.remove(), 1000);
+        }
+
+        // --- 3. INTERACTIVE FUN (EIDI BUTTON) ---
+        const eidiBtn = document.getElementById('eidi-btn');
+        const funnyMessages = [
+            "Nice try! Still waiting on your gift! 😂",
+            "Error 404: Wallet Not Found 💳",
+            "I only accept crypto right now... 🚀",
+            "Transferring 1,000,000 Cookies instead! 🍪",
+            "Tap harder, maybe cash will drop! 💸",
+            "My bank account is crying! 😭",
+            "You owe ME Eidi! 🧐"
+        ];
+
+        eidiBtn.addEventListener('click', (e) => {
+            showPopText(funnyMessages[Math.floor(Math.random() * funnyMessages.length)], e.clientX + 50, e.clientY);
+            createExplosion(e.clientX, e.clientY, 30);
+
+            const emojis = ['🍪', '☕', '💸', '🍩', '✨'];
+            for(let i=0; i<8; i++) {
+                const emoji = document.createElement('div');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.position = 'absolute';
+                emoji.style.left = `${e.clientX}px`;
+                emoji.style.top = `${e.clientY}px`;
+                emoji.style.fontSize = '2rem';
+                emoji.style.pointerEvents = 'none';
+                emoji.style.zIndex = '1000';
+                
+                emoji.style.setProperty('--tx', `${(Math.random() - 0.5) * 300}px`);
+                emoji.style.setProperty('--ty', `${-100 - Math.random() * 200}px`);
+                emoji.style.setProperty('--rot', `${(Math.random() - 0.5) * 720}deg`);
+                emoji.style.animation = `emojiScatter ${0.8 + Math.random()}s forwards ease-out`;
+                
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 2000);
+            }
+            updateMeter(2);
+        });
+
+        // --- 4. HIGH PERFORMANCE CANVAS FIREWORKS ---
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let fireworks = [];
+
+        const colors = ['#ff00cc', '#00ffff', '#ffd700', '#ffffff', '#ff3366'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Firework {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = height;
+                this.targetY = height * 0.1 + Math.random() * (height * 0.4);
+                this.speed = 8 + Math.random() * 6;
+                this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.5;
+                this.vx = Math.cos(this.angle) * this.speed;
+                this.vy = Math.sin(this.angle) * this.speed;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.trail = [];
+                this.exploded = false;
+            }
+
+            update() {
+                this.trail.push({x: this.x, y: this.y});
+                if(this.trail.length > 5) this.trail.shift();
+
+                this.x += this.vx;
+                this.vy += 0.1;
+                this.y += this.vy;
+
+                if (this.vy >= 0 || this.y <= this.targetY) {
+                    this.exploded = true;
+                    createExplosion(this.x, this.y, 50 + Math.random() * 50, this.color);
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                if(this.trail.length > 0) {
+                    ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                    ctx.lineTo(this.x, this.y);
+                }
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color || colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.decay = 0.01 + Math.random() * 0.02;
+                this.gravity = 0.1;
+            }
+
+            update() {
+                this.vx *= 0.95;
+                this.vy *= 0.95;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y, count = 50, baseColor = null) {
+            for (let i = 0; i < count; i++) {
+                const color = Math.random() > 0.5 && baseColor ? baseColor : null;
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            if(e.target === canvas) createExplosion(e.clientX, e.clientY, 60);
+        });
+        canvas.addEventListener('touchstart', (e) => {
+            if(e.target === canvas) createExplosion(e.touches[0].clientX, e.touches[0].clientY, 60);
+        });
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Double the fireworks spawn rate if caffeine rush is active!
+            const spawnRate = document.body.classList.contains('caffeine-rush') ? 0.15 : 0.05;
+
+            if (Math.random() < spawnRate && !isOverloaded) {
+                fireworks.push(new Firework());
+            } else if (isOverloaded && Math.random() < 0.2) { 
+                fireworks.push(new Firework());
+            }
+
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                fireworks[i].update();
+                fireworks[i].draw();
+                if (fireworks[i].exploded) {
+                    fireworks.splice(i, 1);
+                }
+            }
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function initFireworks() {
+            animate();
+            setTimeout(() => {
+                createExplosion(width/2, height/3, 150);
+                createExplosion(width/4, height/4, 100);
+                createExplosion(width*0.75, height/4, 100);
+            }, 500);
+        }
+
+    </script>
+</body>
+</html>

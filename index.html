@@ -364,7 +364,7 @@
             display: inline-block;
             white-space: nowrap;
             font-size: 1.2rem;
-            animation: ticker 35s linear infinite;
+            animation: ticker 60s linear infinite;
         }
 
         /* --- FUNNY FLYING COFFEE ROCKET --- */
@@ -376,11 +376,11 @@
             z-index: 15;
             filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.5));
             pointer-events: auto;
-            cursor: crosshair; /* To show it's shootable/clickable */
+            cursor: crosshair; 
         }
 
         .fly-animation {
-            animation: flyAcross 12s linear infinite;
+            animation: flyAcross 20s linear infinite;
         }
 
         /* --- LANTERNS --- */
@@ -405,6 +405,28 @@
             animation-duration: 5s;
             animation-delay: 1s;
             width: 80px;
+        }
+
+        /* --- ATTRIBUTION (MADE BY MMS) --- */
+        .made-by-mms {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 9000;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            cursor: default;
+        }
+
+        .made-by-mms:hover {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            transform: translateY(-2px);
         }
 
         /* --- KEYFRAMES --- */
@@ -470,12 +492,10 @@
 </head>
 <body>
 
-    <!-- SCENE 0: Start Button -->
     <div id="start-screen">
         <button id="start-btn">Start Moon Sighting 🔭</button>
     </div>
 
-    <!-- SCENE 1: The Build Up -->
     <div id="intro-scene">
         <div class="telescope-text" id="status-text">Calibrating Telescope...</div>
         <div class="moon-container" id="the-moon">
@@ -483,15 +503,11 @@
         </div>
     </div>
 
-    <!-- The Transition Flash -->
     <div id="flash"></div>
 
-    <!-- SCENE 2: The Funny & Cool Celebration -->
     <div id="celebration-scene">
-        <!-- Canvas for high-performance fireworks -->
         <canvas id="fireworks"></canvas>
 
-        <!-- Sugar Coma Meter -->
         <div id="coma-meter-container">
             <div class="meter-title">Sugar Coma Level</div>
             <div class="meter-bar">
@@ -500,7 +516,6 @@
             <div class="meter-title" id="meter-status" style="font-size: 0.6rem; color: #fff;">Status: Hungry</div>
         </div>
 
-        <!-- Hanging Lanterns (SVG) -->
         <div class="lantern-container">
             <svg class="lantern" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
                 <line x1="50" y1="0" x2="50" y2="40" stroke="#ffd700" stroke-width="2"/>
@@ -521,7 +536,6 @@
             </svg>
         </div>
 
-        <!-- The Main Content -->
         <div class="celebration-content">
             <h1 class="eid-title">EID MUBARAK!</h1>
             <p class="eid-subtitle">Ramadan is over! Catch the falling Kahk and beware of the Aunties asking questions! ☕🍪</p>
@@ -532,10 +546,8 @@
             </div>
         </div>
 
-        <!-- The Funny Flying Coffee (SVG) - NOW CLICKABLE! -->
         <div class="flying-coffee" id="coffee-rocket" title="Click for Caffeine Rush!">
             <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <!-- Rocket Flames -->
                 <g transform="translate(0, 50)">
                     <path d="M80 180 Q100 250 120 180 Z" fill="#ff3366">
                         <animate attributeName="d" values="M80 180 Q100 250 120 180 Z; M70 180 Q100 280 130 180 Z; M80 180 Q100 250 120 180 Z" dur="0.5s" repeatCount="indefinite"/>
@@ -544,7 +556,6 @@
                         <animate attributeName="d" values="M90 180 Q100 220 110 180 Z; M85 180 Q100 240 115 180 Z; M90 180 Q100 220 110 180 Z" dur="0.5s" repeatCount="indefinite"/>
                     </path>
                 </g>
-                <!-- Coffee Cup -->
                 <g transform="translate(0, 20)">
                     <path d="M140 80 Q170 80 170 110 Q170 140 140 140" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
                     <path d="M50 50 L150 50 L130 180 L70 180 Z" fill="#fff"/>
@@ -561,13 +572,14 @@
             </svg>
         </div>
 
-        <!-- Funny News Ticker -->
         <div class="news-ticker-container">
             <div class="news-ticker" id="news-bar">
                 🚨 BREAKING NEWS: Man attempts to eat 3rd lunch, forgets it's only 11 AM 🚨 &nbsp; | &nbsp; 📉 Water consumption drops by 90% as population survives on pure caffeine 📉 &nbsp; | &nbsp; ☕ Local coffee shops report 5000% increase in morning sales ☕ &nbsp; | &nbsp; 🍪 Scientific study confirms stomach capacity expands infinitely for Kahk 🍪 &nbsp; | &nbsp; 💰 Eidi reserves running critically low, uncle caught handing out expired coupons! 💰 &nbsp; | &nbsp; 💤 "I'll just rest my eyes for 5 minutes" turns into 14-hour hibernation 💤
             </div>
         </div>
     </div>
+
+    <div class="made-by-mms">made by mms</div>
 
     <script>
         // --- 1. THE CINEMATIC TIMELINE WITH JOKES ---
@@ -599,18 +611,18 @@
                     moonContainer.classList.add('visible');
                     moonElement.className = 'street-lamp';
                     moonElement.style.animation = 'none'; 
-                }, 2500);
+                }, 3000);
 
                 setTimeout(() => { 
                     statusText.innerText = "Wait, is that a street lamp? 💡"; 
                     statusText.style.color = "#ffebcc";
-                }, 3500);
+                }, 4500);
 
                 setTimeout(() => {
                     moonContainer.classList.remove('visible');
                     statusText.innerText = "Recalibrating...";
                     statusText.style.color = "rgba(255, 255, 255, 0.8)";
-                }, 5500);
+                }, 7500);
 
                 // The Real Moon
                 setTimeout(() => {
@@ -619,9 +631,9 @@
                     moonContainer.classList.add('visible');
                     statusText.innerText = "Real Moon Spotted! 🌙";
                     statusText.style.color = "var(--gold)";
-                }, 7500);
+                }, 10500);
 
-                setTimeout(() => { statusText.innerText = "Initiating Eid Protocol..."; }, 9500);
+                setTimeout(() => { statusText.innerText = "Initiating Eid Protocol..."; }, 13500);
 
                 // The Drop
                 setTimeout(() => {
@@ -637,7 +649,7 @@
                         startAuntieMiniGame(); // Start the Auntie Boss
                     }, 200);
 
-                }, 11000);
+                }, 16000);
             });
         });
 
@@ -674,8 +686,8 @@
             
             setTimeout(() => {
                 document.body.classList.remove('caffeine-rush');
-                newsBar.style.animationDuration = '35s';
-                coffeeRocket.style.animationDuration = '12s';
+                newsBar.style.animationDuration = '60s';
+                coffeeRocket.style.animationDuration = '20s';
             }, 5000); // 5 seconds of madness
         });
 

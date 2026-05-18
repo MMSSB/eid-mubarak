@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <title>Eid Mubarak! 🌙✨</title>
-    <meta name="description" content="Made By MMS">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Eid Adha Mubarak! 🐑✨</title>
+    <meta name="description" content="Made By MMS - Adha Edition">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* --- BASE STYLES --- */
         :root {
-            --bg-dark: #070714;
-            --bg-party: #120b29;
-            --primary: #ff00cc;
-            --secondary: #00ffff;
+            --bg-dark: #0f0c29;
+            --bg-party: #302b63;
+            --primary: #ff4b2b;
+            --secondary: #ff416c;
             --gold: #ffd700;
-            --danger: #ff3366;
+            --danger: #d90429;
+            --accent: #00e5ff;
         }
 
         * {
@@ -24,8 +23,7 @@
             padding: 0;
             box-sizing: border-box;
             user-select: none;
-              -webkit-tap-highlight-color: transparent; /* Makes the highlight invisible */
-
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -41,14 +39,8 @@
             transition: background-color 1s ease;
         }
 
-        /* Screen Shake & Caffeine Rush */
-        .shake {
-            animation: screenShake 0.5s infinite;
-        }
-        
-        .caffeine-rush {
-            animation: crazyColors 0.5s infinite, screenShake 0.2s infinite;
-        }
+        .shake { animation: screenShake 0.5s infinite; }
+        .caffeine-rush { animation: crazyColors 0.5s infinite, screenShake 0.2s infinite; }
 
         @keyframes crazyColors {
             0% { filter: hue-rotate(0deg); }
@@ -78,11 +70,11 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: radial-gradient(circle at center, #1a1a3a 0%, var(--bg-dark) 100%);
+            background: radial-gradient(circle at center, #24243e 0%, var(--bg-dark) 100%);
             transition: opacity 1s ease, transform 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
         }
 
-        .telescope-text {
+        .radar-text {
             font-size: clamp(1.2rem, 3vw, 2rem);
             font-weight: 700;
             letter-spacing: 2px;
@@ -94,43 +86,16 @@
             animation: pulseText 1.5s infinite alternate;
         }
 
-        .moon-container {
-            width: 120px;
-            height: 120px;
+        .target-container {
+            font-size: 80px;
             position: relative;
             opacity: 0;
             transform: translateY(50px);
             transition: all 2s ease;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
         }
 
-        .moon-container.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .moon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: transparent;
-            box-shadow: 20px 20px 0 0 var(--gold);
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
-            animation: rockMoon 4s infinite ease-in-out alternate;
-        }
-
-        .street-lamp {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #ffebcc;
-            box-shadow: 0 0 30px 10px rgba(255, 235, 204, 0.8);
-            position: absolute;
-            top: 20px;
-            left: 30px;
-        }
+        .target-container.visible { opacity: 1; transform: translateY(0); }
 
         #flash {
             position: absolute;
@@ -150,16 +115,77 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-            background: radial-gradient(circle at bottom, #2b1055 0%, var(--bg-dark) 100%);
+            background: radial-gradient(circle at bottom, var(--bg-party) 0%, var(--bg-dark) 100%);
             text-align: center;
             padding: 20px;
         }
 
-        #fireworks {
+        #fireworks { position: absolute; inset: 0; z-index: 1; }
+
+        /* --- HOW TO PLAY GUIDE --- */
+        #guide-overlay {
             position: absolute;
             inset: 0;
-            z-index: 1; 
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.5s;
         }
+
+        .guide-box {
+            background: linear-gradient(135deg, var(--bg-party), var(--bg-dark));
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(255, 215, 0, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .guide-box h2 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .guide-box ul {
+            list-style: none;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .guide-box li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #close-guide-btn {
+            width: 100%;
+            padding: 15px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+            transition: transform 0.2s;
+        }
+
+        #close-guide-btn:active { transform: scale(0.95); }
 
         /* --- MAGIC CURSOR TRAIL --- */
         .magic-trail {
@@ -174,69 +200,24 @@
             0% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
             100% { opacity: 0; transform: scale(0.2) translateY(30px) rotate(90deg); }
         }
-/* ... (Your existing CSS variables and base styles) ... */
 
-    /* --- MOBILE SPECIFIC FIXES --- */
-    @media (max-width: 600px) {
-        .eid-title {
-            font-size: clamp(2.5rem, 15vw, 4rem); /* Smaller font for mobile */
-            margin-bottom: 10px;
+        /* --- MOBILE SPECIFIC FIXES --- */
+        @media (max-width: 600px) {
+            .eid-title { font-size: clamp(2rem, 12vw, 3.5rem) !important; margin-bottom: 5px; }
+            .eid-subtitle { font-size: 0.9rem !important; padding: 0 10px; }
+            .eidi-box { padding: 10px 15px !important; width: 95%; }
+            .news-ticker { animation-duration: 35s !important; font-size: 1rem !important; }
+            .guide-box h2 { font-size: 1.4rem; }
+            .guide-box ul { font-size: 0.95rem; }
         }
 
-        .eid-subtitle {
-            font-size: 1rem;
-            padding: 0 15px;
-            margin-bottom: 20px;
-        }
-
-        .eidi-box {
-            padding: 12px 20px;
-            width: 90%; /* Fluid width on mobile */
-            max-width: 320px;
-        }
-
-        .eidi-text {
-            font-size: 0.9rem;
-        }
-
-
-
-        /* Make lanterns smaller so they don't crowd the screen */
-        .lantern {
-            width: 40px !important;
-        }
-
-        /* Speed up ticker for faster reading on small screens */
-        .news-ticker {
-            animation-duration: 40s;
-            font-size: 1rem;
-        }
-        
-        /* Adjust Auntie popups to stay within screen center */
-        .auntie-popup {
-            width: 85vw;
-            left: 7.5vw !important;
-            font-size: 1rem;
-        }
-    }
-
-    /* Handle Landscape mode on phones */
-    @media (max-height: 500px) and (orientation: landscape) {
-        .celebration-content {
-            flex-direction: row;
-            gap: 15px;
-            transform: scale(0.8);
-        }
-        .lantern-container { display: none; }
-        #coma-meter-container { top: 10px; bottom: auto; left: 10px; transform: none; }
-    }
-        /* --- SUGAR COMA METER --- */
+        /* --- FATTEH COMA METER --- */
         #coma-meter-container {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 30;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             padding: 10px 15px;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -245,7 +226,7 @@
             gap: 5px;
             backdrop-filter: blur(5px);
             opacity: 0;
-            animation: slideUpFade 1s 2s forwards ease-out;
+            animation: slideUpFade 1s 1s forwards ease-out;
         }
 
         .meter-title {
@@ -268,16 +249,16 @@
         #meter-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--danger));
+            background: linear-gradient(90deg, var(--gold), var(--primary), var(--danger));
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 10px;
             box-shadow: 0 0 10px var(--primary);
         }
 
-        /* --- FALLING COOKIES --- */
-        .falling-cookie {
+        /* --- FALLING MEAT --- */
+        .falling-meat {
             position: absolute;
-            font-size: 2.5rem;
+            font-size: 3rem;
             cursor: pointer;
             z-index: 25;
             animation: fallDown linear forwards;
@@ -285,10 +266,10 @@
             transition: transform 0.1s;
         }
         
-        .falling-cookie:hover { transform: scale(1.2); }
+        .falling-meat:active { transform: scale(1.3); }
         
-        .golden-cookie {
-            font-size: 3.5rem;
+        .golden-kebab {
+            font-size: 4rem;
             filter: drop-shadow(0 0 20px var(--gold));
             animation: fallDown linear forwards, pulseGolden 0.5s infinite alternate;
         }
@@ -299,48 +280,47 @@
         }
 
         @keyframes fallDown {
-            0% { top: -50px; transform: rotate(0deg); }
+            0% { top: -60px; transform: rotate(0deg); }
             100% { top: 110vh; transform: rotate(360deg); }
         }
 
-        /* --- AUNTIE POPUP MINI-GAME --- */
-        .auntie-popup {
+        /* --- RUNNING SHEEP --- */
+        .running-sheep {
             position: absolute;
-            background: linear-gradient(135deg, #ff00cc, #ff3366);
-            padding: 20px;
-            border-radius: 15px;
-            border: 3px solid white;
-            z-index: 200;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: top 0.1s ease-out, left 0.1s ease-out;
-            text-align: center;
-            max-width: 300px;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 4rem;
+            z-index: 28;
+            pointer-events: auto;
+            cursor: crosshair;
+            animation: runSheep linear forwards;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            100% { transform: scale(1); }
+        .inner-sheep {
+            display: inline-block;
+            animation: sheepBounce 0.2s infinite alternate ease-out;
         }
 
-        .dodge-btn {
-            margin-top: 15px;
-            padding: 8px 15px;
-            background: white;
-            color: #ff3366;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #cccccc;
-            font-family: 'Nunito', sans-serif;
+        .running-sheep.flip-direction {
+            animation: runSheepReverse linear forwards;
         }
-        .dodge-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #cccccc;
+
+        .running-sheep.flip-direction .inner-sheep {
+            transform: scaleX(-1);
+        }
+
+        @keyframes runSheep {
+            0% { transform: translateX(120vw); }
+            100% { transform: translateX(-30vw); }
+        }
+
+        @keyframes runSheepReverse {
+            0% { transform: translateX(-30vw); }
+            100% { transform: translateX(120vw); }
+        }
+
+        @keyframes sheepBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-25px); }
         }
 
         /* UI Elements */
@@ -350,7 +330,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             pointer-events: none; 
         }
 
@@ -358,7 +338,7 @@
             font-family: 'Fredoka One', cursive;
             font-size: clamp(3rem, 10vw, 8rem);
             line-height: 1.1;
-            background: linear-gradient(to right, var(--primary), var(--secondary), var(--gold), var(--primary));
+            background: linear-gradient(to right, var(--primary), var(--gold), var(--accent), var(--primary));
             background-size: 300% auto;
             color: transparent;
             -webkit-background-clip: text;
@@ -369,7 +349,7 @@
         }
 
         .eid-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
             font-weight: 700;
             color: #fff;
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -379,14 +359,14 @@
         }
 
         .eidi-box {
-            margin-top: 30px;
+            margin-top: 20px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px dashed rgba(255, 255, 255, 0.3);
             border-radius: 20px;
             padding: 15px 30px;
             backdrop-filter: blur(10px);
             opacity: 0;
-            animation: slideUpFade 1s 1s forwards ease-out;
+            animation: slideUpFade 1s 0.8s forwards ease-out;
             cursor: pointer;
             transition: all 0.3s;
             pointer-events: auto; 
@@ -399,19 +379,15 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
-        .eidi-text {
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 1px;
-        }
+        .eidi-text { font-weight: 900; color: var(--gold); letter-spacing: 1px; }
 
         /* --- NEWS TICKER --- */
         .news-ticker-container {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            color: var(--secondary);
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--accent);
             font-weight: bold;
             padding: 12px 0;
             overflow: hidden;
@@ -426,50 +402,26 @@
             animation: ticker 60s linear infinite;
         }
 
-        /* --- FUNNY FLYING COFFEE ROCKET --- */
-        .flying-coffee {
+        /* --- FLYING TEA ROCKET --- */
+        .flying-tea {
             position: absolute;
             bottom: -200px;
             left: -150px;
-            width: 150px;
+            font-size: 80px;
             z-index: 15;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.5));
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.6));
             pointer-events: auto;
             cursor: crosshair; 
         }
 
         .fly-animation {
-            animation: flyAcross 20s linear infinite;
-        }
-
-        /* --- LANTERNS --- */
-        .lantern-container {
-            position: absolute;
-            top: 0;
-            z-index: 15;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 10vw;
-            pointer-events: none;
-        }
-
-        .lantern {
-            width: 60px;
-            transform-origin: top center;
-            animation: swing 4s infinite ease-in-out alternate;
-        }
-        
-        .lantern:nth-child(2) {
-            animation-duration: 5s;
-            animation-delay: 1s;
-            width: 80px;
+            animation: flyAcross 25s linear infinite;
         }
 
         /* --- ATTRIBUTION (MADE BY MMS) --- */
         .made-by-mms {
             position: fixed;
-            bottom: 15px;
+            bottom: 50px;
             right: 20px;
             color: rgba(255, 255, 255, 0.4);
             font-family: 'Nunito', sans-serif;
@@ -479,26 +431,18 @@
             z-index: 9000;
             transition: all 0.3s ease;
             pointer-events: auto;
-            cursor: default;
         }
 
-        .made-by-mms:hover {
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-            transform: translateY(-2px);
-        }
+        .made-by-mms:hover { color: var(--gold); transform: translateY(-2px); }
 
         /* --- KEYFRAMES --- */
         @keyframes pulseText { 0% { opacity: 0.4; } 100% { opacity: 1; } }
-        @keyframes rockMoon { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
         @keyframes shine { to { background-position: 300% center; } }
         @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes flashBang { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
         @keyframes flyAcross { 0% { transform: translate(0, 0) rotate(-10deg); } 25% { transform: translate(30vw, -40vh) rotate(5deg); } 50% { transform: translate(60vw, -20vh) rotate(-5deg); } 75% { transform: translate(90vw, -60vh) rotate(10deg); } 100% { transform: translate(120vw, -100vh) rotate(-15deg); } }
-        @keyframes swing { 0% { transform: rotate(-15deg); } 100% { transform: rotate(15deg); } }
         @keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-        /* Confetti text pop */
         .pop-text {
             position: absolute;
             color: var(--gold);
@@ -532,19 +476,15 @@
             padding: 15px 40px;
             border-radius: 50px;
             border: none;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--primary), var(--gold));
             color: white;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 0, 204, 0.4);
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
             transition: all 0.3s ease;
             animation: pulseBtn 2s infinite alternate;
         }
 
-        #start-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.6);
-        }
-
+        #start-btn:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(255, 215, 0, 0.6); }
         @keyframes pulseBtn { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
     </style>
@@ -552,13 +492,13 @@
 <body>
 
     <div id="start-screen">
-        <button id="start-btn">Start Moon Sighting 🔭</button>
+        <button id="start-btn">Catch the Sheep! 🏃‍♂️🐑</button>
     </div>
 
     <div id="intro-scene">
-        <div class="telescope-text" id="status-text">Calibrating Telescope...</div>
-        <div class="moon-container" id="the-moon">
-            <div id="moon-element" class="moon"></div>
+        <div class="radar-text" id="status-text">Searching for the runaway sheep...</div>
+        <div class="target-container" id="the-target">
+            <div id="target-element">🐑</div>
         </div>
     </div>
 
@@ -568,73 +508,44 @@
         <canvas id="fireworks"></canvas>
 
         <div id="coma-meter-container">
-            <div class="meter-title">Sugar Coma Level</div>
+            <div class="meter-title">Meat Coma Level</div>
             <div class="meter-bar">
                 <div id="meter-fill"></div>
             </div>
-            <div class="meter-title" id="meter-status" style="font-size: 0.6rem; color: #fff;">Status: Hungry</div>
-        </div>
-
-        <div class="lantern-container">
-            <svg class="lantern" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
-                <line x1="50" y1="0" x2="50" y2="40" stroke="#ffd700" stroke-width="2"/>
-                <path d="M30 40 L70 40 L80 120 L20 120 Z" fill="rgba(255, 215, 0, 0.2)" stroke="#ffd700" stroke-width="4"/>
-                <path d="M20 120 L80 120 L60 150 L40 150 Z" fill="#ffd700"/>
-                <circle cx="50" cy="80" r="15" fill="#ff00cc" opacity="0.8">
-                    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="50" cy="165" r="5" fill="#ffd700"/>
-            </svg>
-            <svg class="lantern" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
-                <line x1="50" y1="0" x2="50" y2="40" stroke="#00ffff" stroke-width="2"/>
-                <path d="M40 40 L60 40 L75 110 L25 110 Z" fill="rgba(0, 255, 255, 0.2)" stroke="#00ffff" stroke-width="4"/>
-                <path d="M25 110 L75 110 L55 130 L45 130 Z" fill="#00ffff"/>
-                <circle cx="50" cy="75" r="10" fill="#ffd700" opacity="0.8">
-                    <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
-                </circle>
-            </svg>
+            <div class="meter-title" id="meter-status" style="font-size: 0.6rem; color: #fff;">Status: Craving Fatteh</div>
         </div>
 
         <div class="celebration-content">
-            <h1 class="eid-title">EID MUBARAK!</h1>
-            <p class="eid-subtitle">Ramadan is over! Catch the falling Kahk and beware of the Aunties asking questions! ☕🍪</p>
+            <h1 class="eid-title">EID ADHA MUBARAK!</h1>
+            <p class="eid-subtitle">Time for Fatteh! Catch the falling meat and dodge the food coma! 🥩🍲</p>
             
             <div class="eidi-box" id="eidi-btn">
-                <div class="eidi-text">💰 CLICK HERE TO SEND ME EIDI 💰</div>
-                <small style="opacity:0.7;">(Warning: Button may cause extreme wealth transfer)</small>
+                <div class="eidi-text">💰 EIDI BUTTON (Yes, even in Adha) 💰</div>
+                <small style="opacity:0.7;">(Tap for financial blessings)</small>
             </div>
         </div>
 
-        <div class="flying-coffee" id="coffee-rocket" title="Click for Caffeine Rush!">
-            <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                <g transform="translate(0, 50)">
-                    <path d="M80 180 Q100 250 120 180 Z" fill="#ff3366">
-                        <animate attributeName="d" values="M80 180 Q100 250 120 180 Z; M70 180 Q100 280 130 180 Z; M80 180 Q100 250 120 180 Z" dur="0.5s" repeatCount="indefinite"/>
-                    </path>
-                    <path d="M90 180 Q100 220 110 180 Z" fill="#ffd700">
-                        <animate attributeName="d" values="M90 180 Q100 220 110 180 Z; M85 180 Q100 240 115 180 Z; M90 180 Q100 220 110 180 Z" dur="0.5s" repeatCount="indefinite"/>
-                    </path>
-                </g>
-                <g transform="translate(0, 20)">
-                    <path d="M140 80 Q170 80 170 110 Q170 140 140 140" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
-                    <path d="M50 50 L150 50 L130 180 L70 180 Z" fill="#fff"/>
-                    <ellipse cx="100" cy="50" rx="50" ry="15" fill="#4a2e15"/>
-                    <rect x="75" y="90" width="50" height="50" rx="25" fill="#ff00cc"/>
-                    <text x="100" y="120" font-family="Arial" font-size="24" font-weight="bold" fill="#fff" text-anchor="middle" dominant-baseline="middle">☕</text>
-                </g>
-                <line x1="30" y1="100" x2="30" y2="150" stroke="#00ffff" stroke-width="4" stroke-dasharray="10 10">
-                    <animate attributeName="y2" values="150; 200; 150" dur="1s" repeatCount="indefinite"/>
-                </line>
-                <line x1="170" y1="50" x2="170" y2="120" stroke="#00ffff" stroke-width="4" stroke-dasharray="10 10">
-                    <animate attributeName="y2" values="120; 180; 120" dur="0.8s" repeatCount="indefinite"/>
-                </line>
-            </svg>
+        <div class="flying-tea" id="tea-rocket" title="Shai Koshary Rush! ☕🚀">
+            🍵💨
         </div>
 
         <div class="news-ticker-container">
             <div class="news-ticker" id="news-bar">
-                🚨 BREAKING NEWS: Man attempts to eat 3rd lunch, forgets it's only 11 AM 🚨 &nbsp; | &nbsp; 📉 Water consumption drops by 90% as population survives on pure caffeine 📉 &nbsp; | &nbsp; ☕ Local coffee shops report 5000% increase in morning sales ☕ &nbsp; | &nbsp; 🍪 Scientific study confirms stomach capacity expands infinitely for Kahk 🍪 &nbsp; | &nbsp; 💰 Eidi reserves running critically low, uncle caught handing out expired coupons! 💰 &nbsp; | &nbsp; 💤 "I'll just rest my eyes for 5 minutes" turns into 14-hour hibernation 💤
+                🚨 BREAKING NEWS: Sheep spotted wearing a fake mustache at the airport ✈️🐑 &nbsp; | &nbsp; 📉 Local gym memberships abandoned entirely for the next 4 days 📉 &nbsp; | &nbsp; 🧄 Man eats 4 plates of Fatteh, successfully enters the 4th dimension 🧄 &nbsp; | &nbsp; 🥩 "I'm not eating meat for a month" says man who will eat a Shawarma tomorrow 🥩 &nbsp; | &nbsp; 💰 Uncle claims "You are too old for Eidi", negotiations are ongoing 💰 &nbsp; | &nbsp; 💤 Area Dad falls asleep on couch within 3 minutes of finishing his plate 💤
             </div>
+        </div>
+    </div>
+
+    <div id="guide-overlay">
+        <div class="guide-box">
+            <h2>🎮 How to Survive Adha!</h2>
+            <ul>
+                <li>🥩 Tap the falling meat to feast!</li>
+                <li>🍢 Catch the Golden Kebab for massive points!</li>
+                <li>🏃‍♂️ Catch the RUNNING SHEEP for cardio!</li>
+                <li>🍵 Click the flying Shai for a digestion boost!</li>
+            </ul>
+            <button id="close-guide-btn">Yalla Bena! (Let's Go) 🚀</button>
         </div>
     </div>
 
@@ -644,15 +555,17 @@
         // --- 1. THE CINEMATIC TIMELINE WITH JOKES ---
         document.addEventListener("DOMContentLoaded", () => {
             const statusText = document.getElementById('status-text');
-            const moonContainer = document.getElementById('the-moon');
-            const moonElement = document.getElementById('moon-element');
+            const targetContainer = document.getElementById('the-target');
+            const targetElement = document.getElementById('target-element');
             const introScene = document.getElementById('intro-scene');
             const celebrationScene = document.getElementById('celebration-scene');
             const flash = document.getElementById('flash');
-            const coffeeRocket = document.getElementById('coffee-rocket');
+            const teaRocket = document.getElementById('tea-rocket');
             
             const startScreen = document.getElementById('start-screen');
             const startBtn = document.getElementById('start-btn');
+            const guideOverlay = document.getElementById('guide-overlay');
+            const closeGuideBtn = document.getElementById('close-guide-btn');
 
             let timelineRunning = false;
 
@@ -663,36 +576,34 @@
                 startScreen.style.opacity = '0';
                 setTimeout(() => startScreen.style.display = 'none', 500);
 
-                setTimeout(() => { statusText.innerText = "Searching Night Sky..."; }, 1000);
+                setTimeout(() => { statusText.innerText = "Scanning the neighborhood..."; }, 1000);
 
-                // The Street Lamp Joke
+                // The Cloud Joke
                 setTimeout(() => {
-                    moonContainer.classList.add('visible');
-                    moonElement.className = 'street-lamp';
-                    moonElement.style.animation = 'none'; 
+                    targetContainer.classList.add('visible');
+                    targetElement.innerText = '☁️';
                 }, 3000);
 
                 setTimeout(() => { 
-                    statusText.innerText = "Wait, is that a street lamp? 💡"; 
-                    statusText.style.color = "#ffebcc";
+                    statusText.innerText = "Wait, is that a cloud? 🤨"; 
+                    statusText.style.color = "#ccc";
                 }, 4500);
 
                 setTimeout(() => {
-                    moonContainer.classList.remove('visible');
-                    statusText.innerText = "Recalibrating...";
+                    targetContainer.classList.remove('visible');
+                    statusText.innerText = "Adjusting glasses...";
                     statusText.style.color = "rgba(255, 255, 255, 0.8)";
                 }, 7500);
 
-                // The Real Moon
+                // The Real Sheep
                 setTimeout(() => {
-                    moonElement.className = 'moon';
-                    moonElement.style.animation = 'rockMoon 4s infinite ease-in-out alternate';
-                    moonContainer.classList.add('visible');
-                    statusText.innerText = "Real Moon Spotted! 🌙";
+                    targetElement.innerText = '🐑';
+                    targetContainer.classList.add('visible');
+                    statusText.innerText = "Got him! 🐑🏃‍♂️";
                     statusText.style.color = "var(--gold)";
                 }, 10500);
 
-                setTimeout(() => { statusText.innerText = "Initiating Eid Protocol..."; }, 13500);
+                setTimeout(() => { statusText.innerText = "Heating up the charcoal... 🔥"; }, 13500);
 
                 // The Drop
                 setTimeout(() => {
@@ -703,23 +614,36 @@
                         celebrationScene.style.display = 'flex';
                         
                         initFireworks();
-                        coffeeRocket.classList.add('fly-animation');
-                        startCookieRain(); 
-                        startAuntieMiniGame(); // Start the Auntie Boss
+                        
+                        // Show guide before starting the game elements
+                        guideOverlay.style.display = 'flex';
+                        setTimeout(() => { guideOverlay.style.opacity = '1'; guideOverlay.querySelector('.guide-box').style.transform = 'scale(1)'; }, 10);
+                        
                     }, 200);
-
                 }, 16000);
+            });
+
+            // Start game elements when guide is closed
+            closeGuideBtn.addEventListener('click', () => {
+                guideOverlay.style.opacity = '0';
+                guideOverlay.querySelector('.guide-box').style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    guideOverlay.style.display = 'none';
+                    teaRocket.classList.add('fly-animation');
+                    startMeatRain(); 
+                    startRunningSheep(); // Start the escaping sheep!
+                }, 500);
             });
         });
 
-        // --- NEW: MAGIC CURSOR TRAIL ---
+        // --- MAGIC CURSOR TRAIL ---
         document.addEventListener('mousemove', (e) => {
             if (document.getElementById('celebration-scene').style.display !== 'flex') return;
-            if (Math.random() > 0.4) return; // Don't spawn too many
+            if (Math.random() > 0.4) return; 
             
             const trail = document.createElement('div');
             trail.className = 'magic-trail';
-            const trailEmojis = ['✨', '🌟', '🌙', '💫'];
+            const trailEmojis = ['✨', '🔥', '🥩', '💫'];
             trail.innerText = trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
             trail.style.left = `${e.clientX - 10}px`;
             trail.style.top = `${e.clientY - 10}px`;
@@ -728,82 +652,37 @@
             setTimeout(() => { if (trail.parentNode) trail.remove(); }, 800);
         });
 
-        // --- NEW: COFFEE ROCKET CAFFEINE RUSH EASTER EGG ---
-        const coffeeRocket = document.getElementById('coffee-rocket');
+        // --- TEA ROCKET DIGESTION RUSH ---
+        const teaRocket = document.getElementById('tea-rocket');
         const newsBar = document.getElementById('news-bar');
         
-        coffeeRocket.addEventListener('mousedown', (e) => {
+        teaRocket.addEventListener('mousedown', (e) => {
             if(isOverloaded) return;
-            showPopText("CAFFEINE RUSH!!! ⚡🚀", e.clientX, e.clientY, "var(--secondary)");
+            showPopText("SHAI KOSHARY RUSH!!! 🍵🚀", e.clientX, e.clientY, "var(--accent)");
             
             document.body.classList.add('caffeine-rush');
-            newsBar.style.animationDuration = '3s'; // Super fast news
-            coffeeRocket.style.animationDuration = '3s'; // Zoom out
+            newsBar.style.animationDuration = '3s'; 
+            teaRocket.style.animationDuration = '3s'; 
             
             // Spawn mega fireworks
-            createExplosion(e.clientX, e.clientY, 150, '#00ffff');
+            createExplosion(e.clientX, e.clientY, 150, '#00e5ff');
             
+            // Lower meat coma slightly as a bonus
+            sugarLevel = Math.max(0, sugarLevel - 20);
+            updateMeter(0);
+
             setTimeout(() => {
                 document.body.classList.remove('caffeine-rush');
                 newsBar.style.animationDuration = '60s';
-                coffeeRocket.style.animationDuration = '20s';
-            }, 5000); // 5 seconds of madness
+                teaRocket.style.animationDuration = '25s';
+            }, 5000); 
         });
 
-        // --- NEW: AUNTIE DODGE MINI-GAME ---
-        function startAuntieMiniGame() {
-            const questions = [
-                "So... when are you getting married? 🤨",
-                "How are your grades? Let me see! 🤓",
-                "Did you gain weight from the Kahk? 😳",
-                "My son is an Engineer, what are you doing? 🎓"
-            ];
-
-            setInterval(() => {
-                if(isOverloaded || document.visibilityState !== 'visible') return;
-                
-                const popup = document.createElement('div');
-                popup.className = 'auntie-popup';
-                popup.innerHTML = `👩‍🦳 Auntie asks:<br/><br/>"${questions[Math.floor(Math.random() * questions.length)]}"`;
-                
-                // Random position within safe bounds
-                popup.style.top = Math.max(10, Math.random() * 70) + 'vh';
-                popup.style.left = Math.max(10, Math.random() * 70) + 'vw';
-                
-                const dodgeBtn = document.createElement('button');
-                dodgeBtn.className = 'dodge-btn';
-                dodgeBtn.innerText = "Dodge Question 🏃‍♂️💨";
-                
-                // The button tries to run away when you hover!
-                dodgeBtn.addEventListener('mouseover', () => {
-                    if(Math.random() > 0.4) {
-                        popup.style.top = Math.max(10, Math.random() * 70) + 'vh';
-                        popup.style.left = Math.max(10, Math.random() * 70) + 'vw';
-                    }
-                });
-
-                dodgeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showPopText("Successfully Dodged! 😅", parseInt(popup.style.left), parseInt(popup.style.top), "#00ffff");
-                    createExplosion(e.clientX, e.clientY, 20, '#ffffff');
-                    popup.remove();
-                });
-
-                popup.appendChild(document.createElement('br'));
-                popup.appendChild(dodgeBtn);
-                document.getElementById('celebration-scene').appendChild(popup);
-                
-                // Disappears after 8 seconds if ignored
-                setTimeout(() => { if(popup.parentNode) popup.remove(); }, 8000);
-
-            }, 20000); // Appears every 20 seconds
-        }
-
-        // --- 2. SUGAR COMA & INTERACTIVE COOKIES GAME ---
-        let sugarLevel = 0;
+        // --- 2. MEAT COMA & INTERACTIVE GAME ---
+        let sugarLevel = 0; 
         const meterFill = document.getElementById('meter-fill');
         const meterStatus = document.getElementById('meter-status');
-        const eatSounds = ["CHOMP!", "CRUNCH!", "YUM!", "MORE!", "SUGAR RUSH!", "GULP!"];
+        const eatSounds = ["HAMM!", "FATTEH!", "YUM!", "MORE MEAT!", "BALHANA!", "OOF, FULL!"];
         let isOverloaded = false;
 
         function updateMeter(amount) {
@@ -814,12 +693,12 @@
             
             meterFill.style.width = `${sugarLevel}%`;
 
-            if (sugarLevel < 30) meterStatus.innerText = "Status: Still Hungry";
-            else if (sugarLevel < 60) meterStatus.innerText = "Status: Getting Full";
-            else if (sugarLevel < 90) meterStatus.innerText = "Status: Stomach Pain";
-            else if (sugarLevel < 100) meterStatus.innerText = "Status: CRITICAL LIMIT";
+            if (sugarLevel < 30) meterStatus.innerText = "Status: Still Craving Fatteh";
+            else if (sugarLevel < 60) meterStatus.innerText = "Status: Getting Heavy";
+            else if (sugarLevel < 90) meterStatus.innerText = "Status: Meat Sweats";
+            else if (sugarLevel < 100) meterStatus.innerText = "Status: UNBUTTON PANTS LIMIT";
             else {
-                meterStatus.innerText = "⚠️ SUGAR OVERLOAD ⚠️";
+                meterStatus.innerText = "⚠️ FOOD COMA OVERLOAD ⚠️";
                 meterStatus.style.color = "var(--danger)";
                 meterStatus.style.fontSize = "0.9rem";
                 triggerOverload();
@@ -829,11 +708,10 @@
         function triggerOverload() {
             isOverloaded = true;
             document.body.classList.add('shake');
-            document.querySelector('.eid-subtitle').innerText = "SYSTEM ERROR: TOO MUCH KAHK CONSUMED. INITIATING NAP SEQUENCE.";
+            document.querySelector('.eid-subtitle').innerText = "SYSTEM ERROR: FATTEH LIMIT EXCEEDED. INITIATING SOFA NAP SEQUENCE. 🛋️💤";
             document.querySelector('.eid-subtitle').style.color = "var(--danger)";
             
-            // Mega explosion
-            createExplosion(window.innerWidth/2, window.innerHeight/2, 400, '#ff3366');
+            createExplosion(window.innerWidth/2, window.innerHeight/2, 400, '#ff4b2b');
             
             setTimeout(() => {
                 document.body.classList.remove('shake');
@@ -842,25 +720,25 @@
                 meterStatus.innerText = "Status: Woke up hungry again";
                 meterStatus.style.color = "#fff";
                 meterStatus.style.fontSize = "0.6rem";
-                document.querySelector('.eid-subtitle').innerText = "Just kidding, there is always room for more! ☕🍪 Eid Mubarak";
+                document.querySelector('.eid-subtitle').innerText = "Just kidding, pass the BBQ! 🔥 Eid Adha Mubarak! 🐑";
                 document.querySelector('.eid-subtitle').style.color = "#fff";
                 isOverloaded = false;
             }, 6000); 
         }
 
-        function startCookieRain() {
+        function startMeatRain() {
             setInterval(() => {
                 if(isOverloaded || document.visibilityState !== 'visible') return;
                 
-                const cookie = document.createElement('div');
-                const isGolden = Math.random() < 0.08; // 8% chance for legendary cookie
+                const meat = document.createElement('div');
+                const isGolden = Math.random() < 0.08; 
                 
-                cookie.className = isGolden ? 'falling-cookie golden-cookie' : 'falling-cookie';
-                cookie.innerText = '🍪';
-                cookie.style.left = `${Math.random() * 90}vw`;
+                meat.className = isGolden ? 'falling-meat golden-kebab' : 'falling-meat';
+                meat.innerText = isGolden ? '🍢' : '🥩';
+                meat.style.left = `${Math.max(5, Math.random() * 90)}vw`;
                 
                 const duration = 4 + Math.random() * 4;
-                cookie.style.animationDuration = `${duration}s`;
+                meat.style.animationDuration = `${duration}s`;
 
                 const eatAction = (e) => {
                     e.stopPropagation(); 
@@ -868,24 +746,72 @@
                     const clientY = e.clientY || e.touches[0].clientY;
 
                     if (isGolden) {
-                        showPopText("LEGENDARY KAHK! +25 🌟", clientX, clientY, "var(--gold)");
+                        showPopText("GOLDEN KEBAB! +25 🌟", clientX, clientY, "var(--gold)");
                         createExplosion(clientX, clientY, 100, "var(--gold)");
                         updateMeter(25);
                     } else {
-                        showPopText(eatSounds[Math.floor(Math.random() * eatSounds.length)], clientX, clientY, '#d2b48c');
-                        createExplosion(clientX, clientY, 15, '#d2b48c'); 
+                        showPopText(eatSounds[Math.floor(Math.random() * eatSounds.length)], clientX, clientY, '#ff4b2b');
+                        createExplosion(clientX, clientY, 15, '#ff4b2b'); 
                         updateMeter(8); 
                     }
-                    cookie.remove();
+                    meat.remove();
                 };
 
-                cookie.addEventListener('mousedown', eatAction);
-                cookie.addEventListener('touchstart', eatAction);
+                meat.addEventListener('mousedown', eatAction);
+                meat.addEventListener('touchstart', eatAction);
 
-                document.getElementById('celebration-scene').appendChild(cookie);
+                document.getElementById('celebration-scene').appendChild(meat);
 
-                setTimeout(() => { if (cookie.parentNode) cookie.remove(); }, duration * 1000);
+                setTimeout(() => { if (meat.parentNode) meat.remove(); }, duration * 1000);
             }, 800); 
+        }
+
+        // --- NEW: THE ESCAPING SHEEP! ---
+        function startRunningSheep() {
+            setInterval(() => {
+                if(isOverloaded || document.visibilityState !== 'visible') return;
+                
+                const sheepWrapper = document.createElement('div');
+                // 50% chance to run from left to right instead
+                const isReverse = Math.random() > 0.5;
+                
+                sheepWrapper.className = isReverse ? 'running-sheep flip-direction' : 'running-sheep';
+                // Random height mostly on the bottom half of the screen
+                sheepWrapper.style.bottom = `${10 + Math.random() * 30}vh`; 
+                
+                const innerSheep = document.createElement('div');
+                innerSheep.className = 'inner-sheep';
+                innerSheep.innerText = '🐑';
+                
+                // Sheep speed randomizer (faster is harder to catch!)
+                const duration = 2.5 + Math.random() * 3.5;
+                sheepWrapper.style.animationDuration = `${duration}s`;
+
+                sheepWrapper.appendChild(innerSheep);
+                
+                const catchAction = (e) => {
+                    e.stopPropagation();
+                    const clientX = e.clientX || e.touches[0].clientX;
+                    const clientY = e.clientY || e.touches[0].clientY;
+
+                    showPopText("CAUGHT IT! CARDIO -15 🏃‍♂️💨", clientX, clientY, "var(--accent)");
+                    createExplosion(clientX, clientY, 50, '#ffffff');
+                    
+                    // Catching sheep is a workout, lower the coma meter!
+                    sugarLevel = Math.max(0, sugarLevel - 15);
+                    updateMeter(0);
+                    
+                    sheepWrapper.remove();
+                };
+
+                sheepWrapper.addEventListener('mousedown', catchAction);
+                sheepWrapper.addEventListener('touchstart', catchAction);
+
+                document.getElementById('celebration-scene').appendChild(sheepWrapper);
+
+                setTimeout(() => { if (sheepWrapper.parentNode) sheepWrapper.remove(); }, duration * 1000);
+
+            }, 3500); // Spawns a sheep every 3.5 seconds
         }
 
         function showPopText(msg, x, y, color = "var(--gold)") {
@@ -899,23 +825,23 @@
             setTimeout(() => popText.remove(), 1000);
         }
 
-        // --- 3. INTERACTIVE FUN (EIDI BUTTON) ---
+        // --- 3. EIDI BUTTON JOKES ---
         const eidiBtn = document.getElementById('eidi-btn');
         const funnyMessages = [
-            "Nice try! Still waiting on your gift! 😂",
+            "We spent it all on the sheep! 🐑",
             "Error 404: Wallet Not Found 💳",
-            "I only accept crypto right now... 🚀",
-            "Transferring 1,000,000 Cookies instead! 🍪",
+            "I'll give you a piece of liver instead! 🥩",
+            "Are you not too old for this? 🧐",
             "Tap harder, maybe cash will drop! 💸",
             "My bank account is crying! 😭",
-            "You owe ME Eidi! 🧐"
+            "You owe ME Eidi! 💰"
         ];
 
         eidiBtn.addEventListener('click', (e) => {
-            showPopText(funnyMessages[Math.floor(Math.random() * funnyMessages.length)], e.clientX + 50, e.clientY);
+            showPopText(funnyMessages[Math.floor(Math.random() * funnyMessages.length)], e.clientX, e.clientY - 30);
             createExplosion(e.clientX, e.clientY, 30);
 
-            const emojis = ['🍪', '☕', '💸', '🍩', '✨'];
+            const emojis = ['🥩', '💸', '🐑', '🔥', '✨'];
             for(let i=0; i<8; i++) {
                 const emoji = document.createElement('div');
                 emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
@@ -944,7 +870,7 @@
         let particles = [];
         let fireworks = [];
 
-        const colors = ['#ff00cc', '#00ffff', '#ffd700', '#ffffff', '#ff3366'];
+        const colors = ['#ff4b2b', '#ff416c', '#ffd700', '#ffffff', '#00e5ff'];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -1034,6 +960,7 @@
             }
         }
 
+        // Tap for fireworks
         canvas.addEventListener('mousedown', (e) => {
             if(e.target === canvas) createExplosion(e.clientX, e.clientY, 60);
         });
@@ -1042,10 +969,9 @@
         });
 
         function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillStyle = 'rgba(15, 12, 41, 0.2)'; 
             ctx.fillRect(0, 0, width, height);
 
-            // Double the fireworks spawn rate if caffeine rush is active!
             const spawnRate = document.body.classList.contains('caffeine-rush') ? 0.15 : 0.05;
 
             if (Math.random() < spawnRate && !isOverloaded) {
